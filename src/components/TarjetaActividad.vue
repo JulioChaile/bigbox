@@ -1,5 +1,5 @@
 <template>
-    <div class="container-tarjeta-act">
+    <div @click="irActividad" class="container-tarjeta-act" :style="width()">
         <img :src="img" width="auto" height="auto" />
 
         <div class="full-width title-card">
@@ -7,7 +7,7 @@
 
             <div class="participantes-container">
                 <img
-                    v-for="(a, i) in participants"
+                    v-for="i in actividad.activity.participants"
                     :key="i"
                     src="../assets/Part.jpg"
                 />
@@ -37,14 +37,23 @@ export default {
     data () {
         return {
             img: '',
-            location: '',
-            participants: []
+            location: ''
         }
     },
     created () {
         this.img = this.actividad.activity.image[0]
         this.location = this.actividad.activity.locations[0].province
-        this.participants = new Array(this.actividad.participants)
+    },
+    methods: {
+        irActividad () {
+            this.$router.push({ name: 'Actividad', params: { id: this.actividad.id } })
+            this.$emit('irActividad', this.actividad.id)
+        },
+        width () {
+            if (this.$route.params.id) {
+                return 'width: 270px'
+            }
+        }
     }
 }
 </script>
@@ -57,6 +66,7 @@ export default {
     position: relative;
     margin-bottom: 20px;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .container-tarjeta-act img {
@@ -111,6 +121,7 @@ export default {
     bottom: 0;
     left: 0;
     margin: 5px;
+    margin-bottom: 0px;
     font-weight: 600;
     font-size: 18px;
     color: #464646;
