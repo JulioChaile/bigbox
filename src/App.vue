@@ -1,17 +1,13 @@
 <template>
   <div class="container">
-    <ActividadesContainer />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import ActividadesContainer from './components/Index.vue'
 
 export default {
   name: 'App',
-  components: {
-    ActividadesContainer
-  }
 }
 </script>
 
